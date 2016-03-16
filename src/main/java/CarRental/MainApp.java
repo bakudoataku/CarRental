@@ -22,9 +22,9 @@ public class MainApp extends Application {
 
         log.info("Starting Hello JavaFX and Maven demonstration application");
 
-        String fxmlFile = "src/main/java/CarRental/View/fxml/main.fxml";
+        String fxmlFile = "/View/fxml/main.fxml";
         log.debug("Loading FXML for main view from: {}", fxmlFile);
-        Parent rootNode = FXMLLoader.load(Paths.get(fxmlFile).toUri().toURL());
+        Parent rootNode = FXMLLoader.load(getClass().getResource(fxmlFile));
 
         log.debug("Showing JFX scene");
         Scene scene = new Scene(rootNode, 200, 141);
