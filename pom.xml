@@ -31,11 +31,6 @@
                 <version>8.1.4</version>
                 <configuration>
                     <mainClass>CarRental.MainApp</mainClass>
-
-                    <!-- only required if signing the jar file
-                    <keyStoreAlias>example-user</keyStoreAlias>
-                    <keyStorePassword>example-password</keyStorePassword>
-                    <allPermissions>true</allPermissions> -->
                 </configuration>
                 <executions>
                     <execution>
@@ -47,13 +42,28 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
 
 
     <dependencies>
-    
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208</version>
+        </dependency>
+
+
         <!-- MigLayout -->
 
         <dependency>
