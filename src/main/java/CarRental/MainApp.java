@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Paths;
+
 public class MainApp extends Application {
 
     private static final Logger log = LoggerFactory.getLogger(MainApp.class);
@@ -20,10 +22,9 @@ public class MainApp extends Application {
 
         log.info("Starting Hello JavaFX and Maven demonstration application");
 
-        String fxmlFile = "/fxml/main.fxml";
+        String fxmlFile = "src/main/java/CarRental/View/fxml/main.fxml";
         log.debug("Loading FXML for main view from: {}", fxmlFile);
-        FXMLLoader loader = new FXMLLoader();
-        Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+        Parent rootNode = FXMLLoader.load(Paths.get(fxmlFile).toUri().toURL());
 
         log.debug("Showing JFX scene");
         Scene scene = new Scene(rootNode, 200, 141);
