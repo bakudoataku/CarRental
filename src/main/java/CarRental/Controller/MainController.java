@@ -44,8 +44,7 @@ public class MainController {
             Statement st = DBConnector.getInstance().createStatement();
             System.out.println(encodedPassword);
             System.out.println(sb.toString());
-            ResultSet rs = st.executeQuery("SELECT \"Id\" FROM \"public\".\"Users\" WHERE \"Login\"='" +
-                    loginField.getText() + "' AND \"Password\"='" + sb.toString() + "'");
+            ResultSet rs = st.executeQuery(String.format("SELECT Id FROM public.Users WHERE Login='%s' AND Password='%s'", loginField.getText(), sb.toString()));
 
             if(!rs.next()){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
