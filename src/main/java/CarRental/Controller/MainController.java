@@ -15,9 +15,11 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 /**
  * Created by baku-desktop on 2016-03-16.
+ *
  */
 public class MainController {
 
@@ -34,15 +36,15 @@ public class MainController {
             md.reset();
             byte[] encodedPassword  = md.digest(passwordBytes);
 
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < encodedPassword.length; i++) {
-                String hex = Integer.toHexString(0xFF & encodedPassword[i]);
+            StringBuilder sb = new StringBuilder();
+            for (byte anEncodedPassword : encodedPassword) {
+                String hex = Integer.toHexString(0xFF & anEncodedPassword);
                 if (hex.length() == 1) sb.append('0');
                 sb.append(hex);
             }
 
             Statement st = DBConnector.getInstance().createStatement();
-            System.out.println(encodedPassword);
+            System.out.println(Arrays.toString(encodedPassword));
             System.out.println(sb.toString());
             ResultSet rs = st.executeQuery(String.format("SELECT Id FROM public.Users WHERE Login='%s' AND Password='%s'", loginField.getText(), sb.toString()));
 
