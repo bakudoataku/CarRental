@@ -13,4 +13,20 @@ public class CarEntity {
     public SimpleStringProperty model = new SimpleStringProperty();
     public SimpleFloatProperty price = new SimpleFloatProperty();
     public SimpleStringProperty registration = new SimpleStringProperty();
+
+    public Integer getId(){
+        return id.get();
+    }
+
+    public String getModel(){
+        return model.get();
+    }
+
+    public float getFloat(){
+        return price.get();
+    }
+
+    public String getRegistration(){
+        return registration.get();
+    }
 }

@@ -41,12 +41,35 @@ public class DBConnector {
 
         log.debug("QUERY");
 
+        StringBuilder query = findMethod(table, values);
+        StringBuilder query_conditions = new StringBuilder();
+
+        query.append("WHERE ");
+        conditions.forEach((k, v) -> query_conditions.append(String.format("%s='%s' AND ", k, v)));
+        query.append(query_conditions.toString().replaceAll("AND $", " "));
+
+        log.debug(query.toString());
+        log.debug("Trying to execute query");
+
+        return st.executeQuery(query.toString());
+    }
+
+    public static ResultSet find(String table, List<String> values) throws URISyntaxException, SQLException {
+        Statement st = DBConnector.getInstance().createStatement();
+        StringBuilder query = findMethod(table, values);
+
+        return st.executeQuery(query.toString());
+    }
+
+    private static StringBuilder findMethod(String table, List<String> values) throws URISyntaxException, SQLException{
+
+        log.debug("QUERY");
+
         StringBuilder query = new StringBuilder("SELECT ");
 
         log.debug(query.toString());
 
         StringBuilder query_values = new StringBuilder();
-        StringBuilder query_conditions = new StringBuilder();
 
         log.debug(query.toString());
 
@@ -58,14 +81,8 @@ public class DBConnector {
         query.append(String.format("FROM %s ", table));
 
         log.debug(query.toString());
-
-        query.append("WHERE ");
-        conditions.forEach((k, v) -> query_conditions.append(String.format("%s='%s' AND ", k, v)));
-        query.append(query_conditions.toString().replaceAll("AND $", " "));
-
-        log.debug(query.toString());
         log.debug("Trying to execute query");
 
-        return st.executeQuery(query.toString());
+        return query;
     }
 }
