@@ -28,7 +28,7 @@ public class DBConnector {
         return DriverManager.getConnection(dbUrl);
     }
 
-    public static Connection getInstance() throws URISyntaxException, SQLException {
+    private static Connection getInstance() throws URISyntaxException, SQLException {
         if (connection == null) {
             connection = getConnection();
             return connection;
@@ -36,7 +36,7 @@ public class DBConnector {
             return connection;
     }
 
-    public static ResultSet find(String table, List<String> values, HashMap<String, String> conditions) throws URISyntaxException, SQLException {
+    static ResultSet find(String table, List<String> values, HashMap<String, String> conditions) throws URISyntaxException, SQLException {
         Statement st = DBConnector.getInstance().createStatement();
 
         log.debug("QUERY");
