@@ -18,7 +18,7 @@ public class User extends Model {
     public String password_hash;
 
     public User() {
-        this.table = "user";
+        this.table = "users";
     }
 
     public static boolean authenticated(String username, String password) {

@@ -33,6 +33,7 @@ class Select {
             Statement st = Connector.getInstance().createStatement();
             List<String> where = new ArrayList<>();
             conditions.forEach((k, v) -> where.add(k + "='" + v + "'"));
+            String q = "SELECT * FROM " + model.getTable() + " WHERE " + String.join(" AND ", where);
             ResultSet rs = st.executeQuery("SELECT * FROM " + model.getTable() + " WHERE " + String.join(" AND ", where));
             return resultSetToArrayList(fields, modelClass, rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {

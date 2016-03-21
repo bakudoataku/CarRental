@@ -13,6 +13,6 @@ public class Car extends Model {
     public String registration;
 
     public Car() {
-        this.table = "car";
+        this.table = "cars";
     }
 }
