@@ -1,7 +1,7 @@
 package CarRental.Controller;
 
-import CarRental.Model.DBConnector;
-import CarRental.Model.Entities.Car;
+import CarRental.Model.Car;
+import CarRental.Model.Entities.CarEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,53 +12,38 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by Bartosz on 18.03.2016.
- *
  */
-public class CarsController implements Initializable{
+public class CarsController implements Initializable {
 
 
     @FXML
-    private TableView<Car> availableCarsTableView;
+    private TableView<CarEntity> availableCarsTableView;
     @FXML
-    private TableColumn<Car, Integer> columnId;
+    private TableColumn<CarEntity, Integer> id;
     @FXML
-    private TableColumn<Car, String> columnModel;
+    private TableColumn<CarEntity, String> model;
     @FXML
-    private TableColumn<Car, Float> columnPrice;
+    private TableColumn<CarEntity, Float> price;
     @FXML
-    private TableColumn<Car, String> columnRegistration;
+    private TableColumn<CarEntity, String> registration;
 
-    private ObservableList<Car> carObservableList = FXCollections.observableArrayList();
+    private ObservableList<CarEntity> carEntities = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            ResultSet rs = DBConnector.find("car", new ArrayList<String>() {{
-                add("id");
-                add("model");
-                add("price");
-                add("registration");
-            }});
-            while (rs.next()) {
-                Car car = new Car(rs.getInt("id"), rs.getString("model"), rs.getFloat("price"), rs.getString("registration"));
-                carObservableList.add(car);
-            }
+        List<Car> cars = (List<Car>) (List<?>) new Car().all();
+        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.model, car.price, car.registration)));
 
-            columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            columnModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-            columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-            columnRegistration.setCellValueFactory(new PropertyValueFactory<>("registration"));
-            availableCarsTableView.setItems(carObservableList);
-
-        } catch (URISyntaxException | SQLException e) {
-            e.printStackTrace();
-        }
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        model.setCellValueFactory(new PropertyValueFactory<>("model"));
+        price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        registration.setCellValueFactory(new PropertyValueFactory<>("registration"));
+        availableCarsTableView.setItems(carEntities);
     }
 }

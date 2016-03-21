@@ -1,32 +1,53 @@
 package CarRental.Model.Entities;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 
 /**
- * Created by baku-desktop on 2016-03-17.
+ * Created by Bartosz on 18.03.2016.
  */
 public class CarEntity {
 
-    public SimpleIntegerProperty id = new SimpleIntegerProperty();
-    public SimpleStringProperty model = new SimpleStringProperty();
-    public SimpleFloatProperty price = new SimpleFloatProperty();
-    public SimpleStringProperty registration = new SimpleStringProperty();
+    private final IntegerProperty id;
+    private final StringProperty model;
+    private final FloatProperty price;
+    private final StringProperty registration;
 
-    public Integer getId(){
+    public CarEntity(Integer id, String model, Float price, String registration) {
+        this.id = new SimpleIntegerProperty(id);
+        this.model = new SimpleStringProperty(model);
+        this.price = new SimpleFloatProperty(price);
+        this.registration = new SimpleStringProperty(registration);
+    }
+
+    public int getId() {
         return id.get();
     }
 
-    public String getModel(){
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public String getModel() {
         return model.get();
     }
 
-    public float getFloat(){
+    public StringProperty modelProperty() {
+        return model;
+    }
+
+    public float getPrice() {
         return price.get();
     }
 
-    public String getRegistration(){
+    public FloatProperty priceProperty() {
+        return price;
+    }
+
+    public String getRegistration() {
         return registration.get();
+    }
+
+    public StringProperty registrationProperty() {
+        return registration;
     }
 }

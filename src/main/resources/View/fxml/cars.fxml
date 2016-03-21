@@ -15,10 +15,10 @@
     <TableView fx:id="availableCarsTableView" prefHeight="405.0" prefWidth="510.0" GridPane.halignment="CENTER"
                GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="columnId" prefWidth="75.0" text="Id"/>
-            <TableColumn fx:id="columnModel" prefWidth="75.0" text="Model"/>
-            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="Price"/>
-            <TableColumn fx:id="columnRegistration" prefWidth="75.0" text="Registration"/>
+            <TableColumn fx:id="id" prefWidth="75.0" text="Id"/>
+            <TableColumn fx:id="model" prefWidth="75.0" text="Model"/>
+            <TableColumn fx:id="price" prefWidth="75.0" text="Price"/>
+            <TableColumn fx:id="registration" prefWidth="75.0" text="Registration"/>
         </columns>
     </TableView>
 </GridPane>
