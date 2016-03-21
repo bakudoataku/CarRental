@@ -29,34 +29,10 @@
       <TabPane layoutX="125.0" layoutY="50.0" prefHeight="433.0" prefWidth="510.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Available cars">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="availableCarsTableView" prefHeight="405.0" prefWidth="510.0">
-                           <columns>
-                              <TableColumn fx:id="columnId" prefWidth="75.0" text="Id" />
-                              <TableColumn fx:id="columnModel" prefWidth="75.0" text="Model" />
-                              <TableColumn fx:id="columnPrice" prefWidth="75.0" text="Price" />
-                              <TableColumn fx:id="columnRegistration" prefWidth="75.0" text="Registration" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
+              <fx:include source="cars.fxml"/>
           </Tab>
           <Tab text="Customer list">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView prefHeight="405.0" prefWidth="510.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
+            <fx:include source="userInfos.fxml"/>
           </Tab>
             <Tab text="Cars rented">
                <content>

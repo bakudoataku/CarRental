@@ -1,7 +1,6 @@
 package CarRental.Controller;
 
 import CarRental.Model.User;
-import CarRental.Services.UserServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +33,7 @@ public class MainController {
 
         if (User.authenticated(loginField.getText(), passwordField.getText())) {
             try {
-                FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/cars.fxml"));
+                FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/dashboard.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.setScene(new Scene(root));

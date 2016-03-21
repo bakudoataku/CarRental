@@ -1,6 +1,5 @@
 package CarRental.Model;
 
-import CarRental.Services.UserServices;
 import orm.Model;
 
 import java.io.UnsupportedEncodingException;
