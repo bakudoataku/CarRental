@@ -1,5 +1,8 @@
 package orm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,6 +15,7 @@ import java.util.List;
 
 class Select {
     private final Model model;
+    private Logger log = LoggerFactory.getLogger(Select.class);
 
     Select(Model model) {
         this.model = model;
@@ -20,7 +24,9 @@ class Select {
     List<Model> all(HashMap<Field, String> fields, Class<? extends Model> modelClass) {
         try {
             Statement st = Connector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery(String.format("SELECT * FROM \"%s\"", model.getTable()));
+            String query = String.format("SELECT * FROM \"%s\"", model.getTable());
+            log.debug("Query {}", query);
+            ResultSet rs = st.executeQuery(query);
             return resultSetToArrayList(fields, modelClass, rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -33,7 +39,9 @@ class Select {
             Statement st = Connector.getInstance().createStatement();
             List<String> where = new ArrayList<>();
             conditions.forEach((k, v) -> where.add("\"" + k + "\""+ "='" + v + "'"));
-            ResultSet rs = st.executeQuery(String.format("SELECT * FROM %s WHERE %s", model.getTable(), String.join(" AND ", where)));
+            String query = String.format("SELECT * FROM \"%s\" WHERE %s", model.getTable(), String.join(" AND ", where));
+            log.debug("Query {}", query);
+            ResultSet rs = st.executeQuery(query);
             return resultSetToArrayList(fields, modelClass, rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -44,7 +52,9 @@ class Select {
     Model find(Integer id, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
         try {
             Statement st = Connector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery(String.format("SELECT * FROM \"%s\" WHERE id=%d LIMIT 1", model.getTable(), id));
+            String query = String.format("SELECT * FROM \"%s\" WHERE id=%d LIMIT 1", model.getTable(), id);
+            log.debug("Query {}", query);
+            ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
                 Model modelObject = modelClass.newInstance();
                 resultToModelObject(fields, rs, modelObject);

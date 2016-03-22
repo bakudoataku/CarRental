@@ -13,6 +13,9 @@
     <logger name="CarRental">
         <level value="DEBUG"/>
     </logger>
+    <logger name="orm">
+        <level value="DEBUG"/>
+    </logger>
 
     <root>
         <priority value ="WARN" />

@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jfxrt" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.4.1208" level="project" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout-javafx:4.2" level="project" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout-core:4.2" level="project" />
@@ -18,6 +19,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
-    <orderEntry type="library" name="jfxrt" level="project" />
+    <orderEntry type="library" name="Maven: org.mindrot:jbcrypt:0.3m" level="project" />
   </component>
 </module>

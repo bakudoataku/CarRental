@@ -1,6 +1,6 @@
 package CarRental.Controller;
 
-import CarRental.Model.User;
+import CarRental.Model.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,12 +26,11 @@ public class MainController {
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
-//    private DashboardController dashboardController;
 
     @FXML
     public void loginAction() {
 
-        if (User.authenticated(loginField.getText(), passwordField.getText())) {
+        if (Employee.authenticate(loginField.getText(), passwordField.getText())) {
             try {
                 FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/dashboard.fxml"));
                 Parent root = loader.load();
