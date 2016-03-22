@@ -68,7 +68,7 @@ class Select {
         return result;
     }
 
-    private void resultToModelObject(HashMap<Field, String> fields, ResultSet rs, Object modelObject) {
+    private void resultToModelObject(HashMap<Field, String> fields, ResultSet rs, Model modelObject) {
         fields.forEach((k, v) -> {
             try {
                 Method rsMethod = rs.getClass().getMethod("get" + v, String.class);
