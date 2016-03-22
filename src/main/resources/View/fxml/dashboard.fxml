@@ -25,7 +25,7 @@
       </MenuBar>
       <Button layoutX="14.0" layoutY="56.0" mnemonicParsing="false" text="Add Customer" onAction="#addCustomerAction"/>
       <Button fx:id="addCarButton" layoutX="14.0" layoutY="118.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Add Car" onAction="#addCarAction" />
-      <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Rent a carEntity" onAction="#rentCarAction"/>
+      <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Rent a car" onAction="#rentCarAction"/>
       <TabPane layoutX="125.0" layoutY="50.0" prefHeight="433.0" prefWidth="510.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Available cars">

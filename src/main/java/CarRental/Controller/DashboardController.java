@@ -4,11 +4,17 @@ import CarRental.Model.Entities.CarEntity;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,6 +33,18 @@ public class DashboardController implements Initializable {
 
 
     public void addCustomerAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/addCustomerView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Add new customer");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void addCarAction(ActionEvent actionEvent) {
