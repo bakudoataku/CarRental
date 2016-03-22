@@ -37,7 +37,7 @@ public class CarsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Car> cars = (List<Car>) (List<?>) new Car().all();
+        List<Car> cars = (List<Car>) new Car().all();
         cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.model, car.price, car.registration)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));

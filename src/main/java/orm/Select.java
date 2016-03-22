@@ -17,10 +17,10 @@ class Select {
         this.model = model;
     }
 
-    List<Object> all(HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    List<Model> all(HashMap<Field, String> fields, Class<? extends Model> modelClass) {
         try {
             Statement st = Connector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM " + "\"" + model.getTable() + "\"");
+            ResultSet rs = st.executeQuery(String.format("SELECT * FROM \"%s\"", model.getTable()));
             return resultSetToArrayList(fields, modelClass, rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -28,13 +28,12 @@ class Select {
         }
     }
 
-    List<Object> where(HashMap<String, String> conditions, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    List<Model> where(HashMap<String, String> conditions, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
         try {
             Statement st = Connector.getInstance().createStatement();
             List<String> where = new ArrayList<>();
             conditions.forEach((k, v) -> where.add("\"" + k + "\""+ "='" + v + "'"));
-            String q = "SELECT * FROM " + model.getTable() + " WHERE " + String.join(" AND ", where);
-            ResultSet rs = st.executeQuery("SELECT * FROM " + model.getTable() + " WHERE " + String.join(" AND ", where));
+            ResultSet rs = st.executeQuery(String.format("SELECT * FROM %s WHERE %s", model.getTable(), String.join(" AND ", where)));
             return resultSetToArrayList(fields, modelClass, rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -42,12 +41,12 @@ class Select {
         }
     }
 
-    Object find(Integer id, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    Model find(Integer id, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
         try {
             Statement st = Connector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM " + "\"" + model.getTable() + "\"" + " WHERE id=" + id + " LIMIT 1");
+            ResultSet rs = st.executeQuery(String.format("SELECT * FROM \"%s\" WHERE id=%d LIMIT 1", model.getTable(), id));
             if (rs.next()) {
-                Object modelObject = modelClass.newInstance();
+                Model modelObject = modelClass.newInstance();
                 resultToModelObject(fields, rs, modelObject);
                 return modelObject;
             } else {
@@ -59,10 +58,10 @@ class Select {
         }
     }
 
-    private List<Object> resultSetToArrayList(HashMap<Field, String> fields, Class<? extends Model> modelClass, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
-        ArrayList<Object> result = new ArrayList<>();
+    private List<Model> resultSetToArrayList(HashMap<Field, String> fields, Class<? extends Model> modelClass, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
+        ArrayList<Model> result = new ArrayList<>();
         while (rs.next()) {
-            Object modelObject = modelClass.newInstance();
+            Model modelObject = modelClass.newInstance();
             resultToModelObject(fields, rs, modelObject);
             result.add(modelObject);
         }

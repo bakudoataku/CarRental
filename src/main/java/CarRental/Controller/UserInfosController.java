@@ -18,16 +18,24 @@ import java.util.ResourceBundle;
 /**
  * Created by baku-desktop on 2016-03-21.
  */
-public class UserInfosController implements Initializable{
+public class UserInfosController implements Initializable {
 
-    @FXML private TableView<UserInfoEntity> userInfosTableView;
-    @FXML private TableColumn<UserInfoEntity, Integer> id;
-    @FXML private TableColumn<UserInfoEntity, String> name;
-    @FXML private TableColumn<UserInfoEntity, String> socialNumber;
-    @FXML private TableColumn<UserInfoEntity, String> licence;
-    @FXML private TableColumn<UserInfoEntity, String> address;
-    @FXML private TableColumn<UserInfoEntity, Integer> phone;
-    @FXML private TableColumn<UserInfoEntity, Integer> user;
+    @FXML
+    private TableView<UserInfoEntity> userInfosTableView;
+    @FXML
+    private TableColumn<UserInfoEntity, Integer> id;
+    @FXML
+    private TableColumn<UserInfoEntity, String> name;
+    @FXML
+    private TableColumn<UserInfoEntity, String> socialNumber;
+    @FXML
+    private TableColumn<UserInfoEntity, String> licence;
+    @FXML
+    private TableColumn<UserInfoEntity, String> address;
+    @FXML
+    private TableColumn<UserInfoEntity, Integer> phone;
+    @FXML
+    private TableColumn<UserInfoEntity, Integer> user;
 
     private ObservableList<UserInfoEntity> userInfoEntities = FXCollections.observableArrayList();
 
@@ -36,7 +44,9 @@ public class UserInfosController implements Initializable{
         //List<UserInfo> userInfos = (List<UserInfo>) (List<?>) new UserInfo().all();
         //HashMap<String, String> arguments = new HashMap<>();
         //arguments.put("user", "3");
-        List<UserInfo> userInfos = (List<UserInfo>) (List<?>) new UserInfo().where(new HashMap<String, String>(){{put("user", "3");}});
+        List<UserInfo> userInfos = (List<UserInfo>) new UserInfo().where(new HashMap<String, String>() {{
+            put("user", "2");
+        }});
         userInfos.forEach(customer -> userInfoEntities.add(new UserInfoEntity(customer.id, customer.name, customer.social_number, customer.licence, customer.address, customer.phone, customer.user)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));

@@ -20,15 +20,15 @@ public abstract class Model {
         }
     }
 
-    public List<Object> all() {
+    public List<? extends Model> all() {
         return new Select(this).all(fields, this.getClass());
     }
 
-    public Object find(Integer id) {
+    public Model find(Integer id) {
         return new Select(this).find(id, fields, this.getClass());
     }
 
-    public List<Object> where(HashMap<String, String> conditions) {
+    public List<? extends Model> where(HashMap<String, String> conditions) {
         return new Select(this).where(conditions, fields, this.getClass());
     }
 
