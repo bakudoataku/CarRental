@@ -1,5 +1,6 @@
 package CarRental.Controller;
 
+import CarRental.Model.Body;
 import CarRental.Model.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by baku-desktop on 2016-03-16.
@@ -40,6 +42,8 @@ public class MainController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            List<Body> bodies = (List<Body>) new Body().all();
+//            List<Body> x = bodies;
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");

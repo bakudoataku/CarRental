@@ -23,31 +23,15 @@ public class CarEntity {
         return id.get();
     }
 
-    public IntegerProperty idProperty() {
-        return id;
-    }
-
     public String getModel() {
         return model.get();
-    }
-
-    public StringProperty modelProperty() {
-        return model;
     }
 
     public float getPrice() {
         return price.get();
     }
 
-    public FloatProperty priceProperty() {
-        return price;
-    }
-
     public String getRegistration() {
         return registration.get();
-    }
-
-    public StringProperty registrationProperty() {
-        return registration;
     }
 }

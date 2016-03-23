@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity"
+          prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+          fx:controller="CarRental.Controller.BodiesController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <TableView fx:id="bodiesTableView" prefHeight="405.0" prefWidth="510.0" GridPane.halignment="CENTER"
+               GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="id" prefWidth="75.0" text="Id"/>
+            <TableColumn fx:id="name" prefWidth="75.0" text="Model"/>
+            <TableColumn fx:id="brand" prefWidth="75.0" text="Price"/>
+        </columns>
+    </TableView>
+</GridPane>
