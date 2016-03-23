@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 class Select {
     private final Model model;
@@ -81,11 +82,32 @@ class Select {
     private void resultToModelObject(HashMap<Field, String> fields, ResultSet rs, Model modelObject) {
         fields.forEach((k, v) -> {
             try {
-                Method rsMethod = rs.getClass().getMethod("get" + v, String.class);
-                k.set(modelObject, rsMethod.invoke(rs, k.getName()));
+                if (!v.equals("BelongsTo")){
+                    Method rsMethod = rs.getClass().getMethod("get" + v, String.class);
+                    k.set(modelObject, rsMethod.invoke(rs, k.getName()));
+                } else if (v.equals("BelongsTo")) {
+                    k.set(modelObject, getRelatedObject(rs, modelObject, k));
+                }
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    private Object getRelatedObject(ResultSet rs, Model modelObject, Field k) {
+        try {
+            Integer id = rs.getInt(k.getName());
+            Object relation = k.get(modelObject);
+            Class relatedClass = (Class) relation.getClass().getDeclaredField("relation").get(relation);
+            Object relatedObject = relatedClass.newInstance();
+            Method relatedObjectFindMethod = relatedClass.getMethod("find", Integer.class);
+            Object relatedObjectFoundObject = relatedObjectFindMethod.invoke(relatedObject, id);
+            Method relatedObjectSetMethod = relation.getClass().getMethod("set", Object.class);
+            relatedObjectSetMethod.invoke(relation, relatedObjectFoundObject);
+            return relation;
+        } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
