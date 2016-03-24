@@ -12,7 +12,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,11 +46,10 @@ public class CustomersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Customer> userInfos = (List<Customer>) new Customer().all();
-        userInfos.forEach(customer ->
+        List<Customer> customers = (List<Customer>) new Customer().all();
+        customers.forEach(customer ->
                 customerEntityObservableList.add(new CustomerEntity(customer.id, customer.first_name, customer.last_name,
                         customer.pesel, customer.licence, customer.phone, (Address) customer.address.get())));
-
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("last_name"));
@@ -64,4 +62,7 @@ public class CustomersController implements Initializable {
         CustomersTableView.setItems(customerEntityObservableList);
     }
 
+    ObservableList<CustomerEntity> getCustomerEntityObservableList() {
+        return customerEntityObservableList;
+    }
 }

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,26 +24,36 @@ import java.util.ResourceBundle;
  */
 public class DashboardController implements Initializable {
 
-    @FXML private Button addCarButton;
-    @FXML private TableView<CarEntity> availableCarsTableView;
-    @FXML private TableColumn<CarEntity, String> columnId;
-    @FXML private TableColumn<CarEntity, String> columnModel;
-    @FXML private TableColumn<CarEntity, String> columnPrice;
-    @FXML private TableColumn<CarEntity, String> columnRegistration;
+    @FXML
+    private Button addCarButton;
+    @FXML
+    private TableView<CarEntity> availableCarsTableView;
+    @FXML
+    private TableColumn<CarEntity, String> columnId;
+    @FXML
+    private TableColumn<CarEntity, String> columnModel;
+    @FXML
+    private TableColumn<CarEntity, String> columnPrice;
+    @FXML
+    private TableColumn<CarEntity, String> columnRegistration;
+    @FXML
+    private GridPane customers;
+    @FXML
+    private CustomersController customersController;
     private ObservableList<CarEntity> carEntityObservableList;
-
 
     public void addCustomerAction(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/addCustomerView.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            AddCustomerController addCustomerController = loader.getController();
+            addCustomerController.setParentCustomerEntityObservableList(customersController.getCustomerEntityObservableList());
             stage.setTitle("Add new customer");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.show();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

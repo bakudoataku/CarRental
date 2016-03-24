@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import fxextensions.fields.IntegerField?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="CarRental.Controller.AddCutomerController" fx:id="addCustomerForm">
-   <children>
-      <TextField fx:id="firstNameTextField" layoutX="18.0" layoutY="26.0" prefHeight="25.0" prefWidth="200.0" promptText="First name"/>
-      <TextField fx:id="lastNameTextField" layoutX="18.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" promptText="Last name" />
-      <TextField fx:id="peselTextField" layoutX="18.0" layoutY="93.0" prefHeight="25.0" prefWidth="200.0" promptText="Pesel" />
-      <TextField fx:id="licenseTextField" layoutX="18.0" layoutY="127.0" prefHeight="25.0" prefWidth="200.0" promptText="License" />
-      <TextField fx:id="streetTextField" layoutX="18.0" layoutY="162.0" prefHeight="25.0" prefWidth="200.0" promptText="Street" />
-      <TextField fx:id="cityTextField" layoutX="18.0" layoutY="197.0" prefHeight="25.0" prefWidth="200.0" promptText="City" />
-      <TextField fx:id="zipTextField" layoutX="18.0" layoutY="232.0" prefHeight="25.0" prefWidth="200.0" promptText="Zip" />
-      <Button fx:id="addButton" layoutX="18.0" layoutY="274.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Add" onAction="#addCustomerAction"/>
-      <Button fx:id="clearButton" layoutX="128.0" layoutY="274.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Clear" onAction="#clearFormAction"/>
-      <Label fx:id="statusLabel" layoutX="18.0" layoutY="315.0" prefHeight="17.0" prefWidth="66.0" />
-   </children>
+<?import javafx.scene.layout.Pane?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="388.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/8"
+      fx:controller="CarRental.Controller.AddCustomerController" fx:id="addCustomerForm">
+    <TextField fx:id="firstName" layoutX="18.0" layoutY="26.0" prefHeight="25.0" prefWidth="200.0"
+               promptText="First name"/>
+    <TextField fx:id="lastName" layoutX="18.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0"
+               promptText="Last name"/>
+    <IntegerField fx:id="pesel" layoutX="18.0" layoutY="93.0" prefHeight="25.0" prefWidth="200.0"
+                  promptText="Pesel"/>
+    <TextField fx:id="license" layoutX="18.0" layoutY="127.0" prefHeight="25.0" prefWidth="200.0"
+               promptText="License"/>
+    <IntegerField fx:id="phone" layoutX="18.0" layoutY="162.0" prefHeight="25.0" prefWidth="200.0"
+                  promptText="Zip"/>
+    <TextField fx:id="street" layoutX="18.0" layoutY="197.0" prefHeight="25.0" prefWidth="200.0"
+               promptText="Street"/>
+    <TextField fx:id="city" layoutX="18.0" layoutY="232.0" prefHeight="25.0" prefWidth="200.0"
+               promptText="City"/>
+    <IntegerField fx:id="zip" layoutX="18.0" layoutY="267.0" prefHeight="25.0" prefWidth="200.0"
+                  promptText="Zip"/>
+    <Button fx:id="addButton" layoutX="18.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0"
+            prefWidth="90.0" text="Add" onAction="#addCustomerAction"/>
+    <Button fx:id="clearButton" layoutX="128.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0"
+            prefWidth="90.0" text="Clear" onAction="#clearFormAction"/>
+    <Label fx:id="statusLabel" layoutX="18.0" layoutY="335.0" prefHeight="17.0" prefWidth="66.0"/>
 </Pane>
