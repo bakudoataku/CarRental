@@ -18,6 +18,9 @@ public abstract class Model {
 
     protected String table;
 
+    protected Boolean newInstance = false;
+
+
     protected Model() {
         Field[] fields = this.getClass().getFields();
         for (Field field : fields) {
@@ -33,8 +36,16 @@ public abstract class Model {
         return new Select(this).find(id, fields, this.getClass());
     }
 
-    public List<? extends Model> where(HashMap<String, String> conditions) {
+    protected List<? extends Model> where(HashMap<String, String> conditions) {
         return new Select(this).where(conditions, fields, this.getClass());
+    }
+
+    protected Integer save() {
+        if (this.newInstance) {
+            return new Insert(this).insert(fields, this.getClass());
+        } else {
+            return 0;
+        }
     }
 
     private String getSimpleName(Field field) {
