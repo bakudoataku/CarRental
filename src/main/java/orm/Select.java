@@ -97,15 +97,15 @@ class Select {
     private Object getRelatedObject(ResultSet rs, Model modelObject, Field k) {
         try {
             Integer id = rs.getInt(k.getName());
-            Object relation = k.get(modelObject);
-            Class relatedClass = (Class) relation.getClass().getDeclaredField("relation").get(relation);
+            BelongsTo relation = (BelongsTo) k.get(modelObject);
+            Class relatedClass = relation.getRelationClass();
             Object relatedObject = relatedClass.newInstance();
             Method relatedObjectFindMethod = relatedClass.getMethod("find", Integer.class);
             Object relatedObjectFoundObject = relatedObjectFindMethod.invoke(relatedObject, id);
             Method relatedObjectSetMethod = relation.getClass().getMethod("set", Object.class);
             relatedObjectSetMethod.invoke(relation, relatedObjectFoundObject);
             return relation;
-        } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
+        } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
         }
