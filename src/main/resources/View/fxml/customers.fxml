@@ -5,23 +5,25 @@
 <GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
           minWidth="-Infinity"
           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-          fx:controller="CarRental.Controller.UserInfosController">
+          fx:controller="CarRental.Controller.CustomersController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
     </rowConstraints>
-    <TableView fx:id="userInfosTableView" prefHeight="405.0" prefWidth="510.0" GridPane.halignment="CENTER"
+    <TableView fx:id="CustomersTableView" prefHeight="405.0" prefWidth="510.0" GridPane.halignment="CENTER"
                GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="id" prefWidth="75.0" text="Id"/>
-            <TableColumn fx:id="name" prefWidth="75.0" text="Name"/>
-            <TableColumn fx:id="socialNumber" prefWidth="75.0" text="Social Number"/>
+            <TableColumn fx:id="firstName" prefWidth="75.0" text="First Name"/>
+            <TableColumn fx:id="lastName" prefWidth="75.0" text="Last Name"/>
             <TableColumn fx:id="licence" prefWidth="75.0" text="Licence"/>
-            <TableColumn fx:id="address" prefWidth="75.0" text="Address"/>
+            <TableColumn fx:id="pesel" prefWidth="75.0" text="PESEL"/>
             <TableColumn fx:id="phone" prefWidth="75.0" text="Phone"/>
-            <TableColumn fx:id="user" prefWidth="75.0" text="User"/>
+            <TableColumn fx:id="street" prefWidth="75.0" text="Street"/>
+            <TableColumn fx:id="city" prefWidth="75.0" text="City"/>
+            <TableColumn fx:id="zip" prefWidth="75.0" text="Zip"/>
         </columns>
     </TableView>
 </GridPane>

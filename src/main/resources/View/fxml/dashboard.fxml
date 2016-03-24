@@ -28,7 +28,7 @@
             <fx:include source="bodies.fxml"/>
         </Tab>
         <Tab text="Customer list">
-            <fx:include source="userInfos.fxml"/>
+            <fx:include source="customers.fxml"/>
         </Tab>
         <Tab text="Cars rented">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
