@@ -17,35 +17,23 @@ import java.util.List;
 public class Insert {
     private Logger log = LoggerFactory.getLogger(Insert.class);
     private final Model model;
+    private final List<String> columns = new ArrayList<>();
+    private final List<String> values = new ArrayList<>();
 
     Insert(Model model) {
         this.model = model;
     }
 
-    Integer insert(HashMap<Field, String> fields, Class<? extends Model> modelClass) {
-        final Boolean[] success = {true};
-        Integer id = null;
-        List<String> columns = new ArrayList<>();
-        List<String> values = new ArrayList<>();
-        fields.forEach((k, v) -> {
-            try {
-                if (!v.equals("BelongsTo")) {
-                    if (!k.getName().equals("id")) {
-                        columns.add(k.getName());
-                        values.add(k.get(model).toString());
-                    }
-                } else if (v.equals("BelongsTo")) {
-                    columns.add(k.getName());
-                    BelongsTo relation = ((BelongsTo) k.get(model));
-                    Class relationObjectClass = relation.getRelationClass();
-                    Object relattuinObject = relation.get();
-                    Field idField = relationObjectClass.getField("id");
-                    Integer relatedId = (Integer) idField.get(relattuinObject);
-                    values.add(relatedId.toString());
+    Integer insert(HashMap<Field, String> fields) {
+        Integer id = 0;
+        fields.forEach((field, type) -> {
+            if (!field.getName().equals("id")) {
+                columns.add(field.getName());
+                if (type.equals("BelongsTo")) {
+                    getBelongsFieldToValue(field);
+                } else {
+                    getFieldValue(field);
                 }
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-                e.printStackTrace();
-                success[0] = false;
             }
         });
         try {
@@ -63,12 +51,26 @@ public class Insert {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            success[0] = false;
         }
-        if (success[0]) {
-            return id;
-        } else {
-            return 0;
+        return id;
+    }
+
+    private void getBelongsFieldToValue(Field field) {
+        try {
+            BelongsTo relation = ((BelongsTo) field.get(model));
+            Field idField = relation.getRelationClass().getField("id");
+            Integer relatedId = (Integer) idField.get(relation.get());
+            values.add(relatedId.toString());
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getFieldValue(Field field) {
+        try {
+            values.add(field.get(model).toString());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

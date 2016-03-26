@@ -54,7 +54,7 @@ public abstract class Model {
 
     protected Integer save() {
         if (this.newInstance) {
-            return new Insert(this).insert(fields, this.getClass());
+            return new Insert(this).insert(fields);
         } else {
             return 0;
         }
