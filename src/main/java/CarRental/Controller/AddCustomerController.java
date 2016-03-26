@@ -38,10 +38,10 @@ public class AddCustomerController implements Initializable {
     @FXML
     public Pane addCustomerForm;
 
-    private ObservableList<CustomerEntity> parentCustomerEntityObservableList;
+    private ObservableList<CustomerEntity> customerEntities;
 
-    void setParentCustomerEntityObservableList(ObservableList<CustomerEntity> parentCustomerEntityObservableList) {
-        this.parentCustomerEntityObservableList = parentCustomerEntityObservableList;
+    void setCustomerEntities(ObservableList<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
     }
 
     public void clearFormAction() {
@@ -61,7 +61,7 @@ public class AddCustomerController implements Initializable {
                         address
                 );
                 if (customer != null) {
-                    parentCustomerEntityObservableList.add(new CustomerEntity(customer, address));
+                    customerEntities.add(new CustomerEntity(customer, address));
                 }
             }
             Stage stage = (Stage) addCustomerForm.getScene().getWindow();

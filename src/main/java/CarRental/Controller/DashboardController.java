@@ -40,7 +40,7 @@ public class DashboardController implements Initializable {
     private GridPane customers;
     @FXML
     private CustomersController customersController;
-    private ObservableList<CarEntity> carEntityObservableList;
+    private ObservableList<CarEntity> carEntities;
 
     public void addCustomerAction(ActionEvent actionEvent) {
         try {
@@ -48,7 +48,7 @@ public class DashboardController implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             AddCustomerController addCustomerController = loader.getController();
-            addCustomerController.setParentCustomerEntityObservableList(customersController.getCustomerEntityObservableList());
+            addCustomerController.setCustomerEntities(customersController.getCustomerEntities());
             stage.setTitle("Add new customer");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

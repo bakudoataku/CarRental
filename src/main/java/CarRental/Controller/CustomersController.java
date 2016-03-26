@@ -42,13 +42,13 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<CustomerEntity, Integer> zip;
 
-    private ObservableList<CustomerEntity> customerEntityObservableList = FXCollections.observableArrayList();
+    private ObservableList<CustomerEntity> customerEntities = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Customer> customers = (List<Customer>) new Customer().all();
         customers.forEach(customer ->
-                customerEntityObservableList.add(new CustomerEntity(customer.id, customer.first_name, customer.last_name,
+                customerEntities.add(new CustomerEntity(customer.id, customer.first_name, customer.last_name,
                         customer.pesel, customer.licence, customer.phone, (Address) customer.address.get())));
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("first_name"));
@@ -59,10 +59,10 @@ public class CustomersController implements Initializable {
         street.setCellValueFactory(new PropertyValueFactory<>("street"));
         city.setCellValueFactory(new PropertyValueFactory<>("city"));
         zip.setCellValueFactory(new PropertyValueFactory<>("zip"));
-        CustomersTableView.setItems(customerEntityObservableList);
+        CustomersTableView.setItems(customerEntities);
     }
 
-    ObservableList<CustomerEntity> getCustomerEntityObservableList() {
-        return customerEntityObservableList;
+    ObservableList<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
     }
 }
