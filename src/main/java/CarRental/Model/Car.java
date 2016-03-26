@@ -7,7 +7,6 @@ import orm.Model;
  */
 public class Car extends Model {
 
-    public Integer id;
     public String model;
     public Float price;
     public String registration;

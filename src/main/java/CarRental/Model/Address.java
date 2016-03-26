@@ -8,7 +8,6 @@ import orm.Model;
  */
 public class Address extends Model {
 
-    public Integer id;
     public String street;
     public String city;
     public Integer zip;

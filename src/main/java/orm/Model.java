@@ -17,6 +17,7 @@ public abstract class Model {
     private HashMap<Field, String> fields = new HashMap<>();
 
     protected String table;
+    public Integer id;
 
     protected Boolean newInstance = false;
 
@@ -25,6 +26,17 @@ public abstract class Model {
         Field[] fields = this.getClass().getFields();
         for (Field field : fields) {
             this.fields.put(field, getSimpleName(field));
+        }
+    }
+
+    protected Model create() {
+        newInstance = true;
+        id = save();
+        if (id == 0) {
+            return null;
+        } else {
+            newInstance = false;
+            return this;
         }
     }
 
