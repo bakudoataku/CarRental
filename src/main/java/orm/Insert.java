@@ -14,17 +14,16 @@ import java.util.List;
 /**
  * Created by Bartosz on 24.03.2016.
  */
-public class Insert {
+class Insert extends Query {
     private Logger log = LoggerFactory.getLogger(Insert.class);
-    private final Model model;
     private final List<String> columns = new ArrayList<>();
     private final List<String> values = new ArrayList<>();
 
     Insert(Model model) {
-        this.model = model;
+        super(model);
     }
 
-    Integer insert(HashMap<Field, String> fields) {
+    Integer insert() {
         Integer id = 0;
         fields.forEach((field, type) -> {
             if (!field.getName().equals("id")) {

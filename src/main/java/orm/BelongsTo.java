@@ -4,10 +4,10 @@ package orm;
  * Created by Bartosz on 22.03.2016.
  */
 public class BelongsTo {
-    private Class relation;
+    private Class<? extends Model> relation;
     private Object relationObject;
 
-    public BelongsTo(Class relation) {
+    public BelongsTo(Class<? extends Model> relation) {
         this.relation = relation;
     }
 
@@ -19,7 +19,7 @@ public class BelongsTo {
         this.relationObject = o;
     }
 
-    Class getRelationClass() {
+    Class<? extends Model> getRelationClass() {
         return relation;
     }
 }

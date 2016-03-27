@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,9 +14,6 @@ import java.util.List;
 public abstract class Model {
 
     private static final Logger log = LoggerFactory.getLogger(Model.class);
-
-    private HashMap<Field, String> fields = new HashMap<>();
-
     protected String table;
     public Integer id;
 
@@ -23,10 +21,6 @@ public abstract class Model {
 
 
     protected Model() {
-        Field[] fields = this.getClass().getFields();
-        for (Field field : fields) {
-            this.fields.put(field, getSimpleName(field));
-        }
     }
 
     protected Model create() {
@@ -41,35 +35,23 @@ public abstract class Model {
     }
 
     public List<? extends Model> all() {
-        return new Select(this).all(fields, this.getClass());
+        return new Select(this).all();
     }
 
     public Model find(Integer id) {
-        return new Select(this).find(id, fields, this.getClass());
+        return new Select(this).find(id);
     }
 
     protected List<? extends Model> where(HashMap<String, String> conditions) {
-        return new Select(this).where(conditions, fields, this.getClass());
+        return new Select(this).where(conditions);
     }
 
     protected Integer save() {
         if (this.newInstance) {
-            return new Insert(this).insert(fields);
+            return new Insert(this).insert();
         } else {
             return 0;
         }
-    }
-
-    private String getSimpleName(Field field) {
-        String name = field.getType().getSimpleName();
-        switch (name) {
-            case "Integer":
-                name = "Int";
-                break;
-            default:
-                break;
-        }
-        return name;
     }
 
     String getTable() {

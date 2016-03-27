@@ -5,61 +5,60 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-class Select {
-    private final Model model;
+class Select extends Query {
     private Logger log = LoggerFactory.getLogger(Select.class);
+    private Statement st;
 
     Select(Model model) {
-        this.model = model;
+        super(model);
+        try {
+            st = Connector.getInstance().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            st = null;
+        }
     }
 
-    List<Model> all(HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    List<Model> all() {
         try {
-            Statement st = Connector.getInstance().createStatement();
             String query = String.format("SELECT * FROM \"%s\"", model.getTable());
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
-            return resultSetToArrayList(fields, modelClass, rs);
+            return resultSetToArrayList(rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
 
-    List<Model> where(HashMap<String, String> conditions, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    List<Model> where(HashMap<String, String> conditions) {
         try {
-            Statement st = Connector.getInstance().createStatement();
             List<String> where = new ArrayList<>();
-            conditions.forEach((k, v) -> where.add("\"" + k + "\""+ "='" + v + "'"));
+            conditions.forEach((k, v) -> where.add("\"" + k + "\"" + "='" + v + "'"));
             String query = String.format("SELECT * FROM \"%s\" WHERE %s", model.getTable(), String.join(" AND ", where));
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
-            return resultSetToArrayList(fields, modelClass, rs);
+            return resultSetToArrayList(rs);
         } catch (SQLException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
 
-    Model find(Integer id, HashMap<Field, String> fields, Class<? extends Model> modelClass) {
+    Model find(Integer id) {
         try {
-            Statement st = Connector.getInstance().createStatement();
             String query = String.format("SELECT * FROM \"%s\" WHERE id=%d LIMIT 1", model.getTable(), id);
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
-                Model modelObject = modelClass.newInstance();
-                resultToModelObject(fields, rs, modelObject);
-                return modelObject;
+                return resultToModelObject(rs, modelClass.newInstance());
             } else {
                 return null;
             }
@@ -69,22 +68,19 @@ class Select {
         }
     }
 
-    private List<Model> resultSetToArrayList(HashMap<Field, String> fields, Class<? extends Model> modelClass, ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
+    private List<Model> resultSetToArrayList(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
         ArrayList<Model> result = new ArrayList<>();
         while (rs.next()) {
-            Model modelObject = modelClass.newInstance();
-            resultToModelObject(fields, rs, modelObject);
-            result.add(modelObject);
+            result.add(resultToModelObject(rs, modelClass.newInstance()));
         }
         return result;
     }
 
-    private void resultToModelObject(HashMap<Field, String> fields, ResultSet rs, Model modelObject) {
+    private Model resultToModelObject(ResultSet rs, Model modelObject) {
         fields.forEach((k, v) -> {
             try {
-                if (!v.equals("BelongsTo")){
-                    Method rsMethod = rs.getClass().getMethod("get" + v, String.class);
-                    k.set(modelObject, rsMethod.invoke(rs, k.getName()));
+                if (!v.equals("BelongsTo")) {
+                    k.set(modelObject, rs.getClass().getMethod("get" + v, String.class).invoke(rs, k.getName()));
                 } else if (v.equals("BelongsTo")) {
                     k.set(modelObject, getRelatedObject(rs, modelObject, k));
                 }
@@ -92,18 +88,16 @@ class Select {
                 e.printStackTrace();
             }
         });
+        return modelObject;
     }
 
     private Object getRelatedObject(ResultSet rs, Model modelObject, Field k) {
         try {
             Integer id = rs.getInt(k.getName());
             BelongsTo relation = (BelongsTo) k.get(modelObject);
-            Class relatedClass = relation.getRelationClass();
-            Object relatedObject = relatedClass.newInstance();
-            Method relatedObjectFindMethod = relatedClass.getMethod("find", Integer.class);
-            Object relatedObjectFoundObject = relatedObjectFindMethod.invoke(relatedObject, id);
-            Method relatedObjectSetMethod = relation.getClass().getMethod("set", Object.class);
-            relatedObjectSetMethod.invoke(relation, relatedObjectFoundObject);
+            Class<? extends Model> relatedClass = relation.getRelationClass();
+            Object relatedModel = relatedClass.getMethod("find", Integer.class).invoke(relatedClass.newInstance(), id);
+            relation.getClass().getMethod("set", Object.class).invoke(relation, relatedModel);
             return relation;
         } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
