@@ -16,7 +16,7 @@
     <TextField fx:id="license" layoutX="18.0" layoutY="127.0" prefHeight="25.0" prefWidth="200.0"
                promptText="License"/>
     <IntegerField fx:id="phone" layoutX="18.0" layoutY="162.0" prefHeight="25.0" prefWidth="200.0"
-                  promptText="Zip"/>
+                  promptText="Phone"/>
     <TextField fx:id="street" layoutX="18.0" layoutY="197.0" prefHeight="25.0" prefWidth="200.0"
                promptText="Street"/>
     <TextField fx:id="city" layoutX="18.0" layoutY="232.0" prefHeight="25.0" prefWidth="200.0"
