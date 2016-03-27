@@ -4,22 +4,48 @@ package orm;
  * Created by Bartosz on 22.03.2016.
  */
 public class BelongsTo {
-    private Class<? extends Model> relation;
-    private Object relationObject;
+    private Class<? extends Model> relationClass;
+    private Model relationObject;
+    private Integer relationObjectId;
 
-    public BelongsTo(Class<? extends Model> relation) {
-        this.relation = relation;
+    public BelongsTo(Class<? extends Model> relationClass) {
+        this.relationClass = relationClass;
+        relationObjectId = null;
     }
 
-    public Object get(){
-        return this.relationObject;
+    BelongsTo(Class<? extends Model> relationClass, Integer relationObjectId) {
+        this.relationObjectId = relationObjectId;
+        this.relationClass = relationClass;
+        this.relationObject = null;
     }
 
-    public void set(Object o){
-        this.relationObject = o;
+    public BelongsTo(Model relationObject) {
+        this.relationObject = relationObject;
+        this.relationClass = relationObject.getClass();
+        try {
+            this.relationObjectId = (Integer) relationObject.getClass().getField("id").get(relationObject);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Object get() {
+        try {
+            if (relationObjectId == null) {
+                return null;
+            } else if (relationObject == null){
+                relationObject = relationClass.newInstance().find(relationObjectId);
+                return relationObject;
+            } else {
+                return relationObject;
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     Class<? extends Model> getRelationClass() {
-        return relation;
+        return relationClass;
     }
 }

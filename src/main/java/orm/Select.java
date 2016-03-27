@@ -82,7 +82,13 @@ class Select extends Query {
                 if (!v.equals("BelongsTo")) {
                     k.set(modelObject, rs.getClass().getMethod("get" + v, String.class).invoke(rs, k.getName()));
                 } else if (v.equals("BelongsTo")) {
-                    k.set(modelObject, getRelatedObject(rs, modelObject, k));
+                    if (selectRelated) {
+                        k.set(modelObject, getRelatedObject(rs, modelObject, k));
+                    } else {
+                        Class<? extends Model> relationClass = ((BelongsTo) k.get(modelObject)).getRelationClass();
+                        Integer id = (Integer) rs.getClass().getMethod("getInt", String.class).invoke(rs, k.getName());
+                        k.set(modelObject, new BelongsTo(relationClass, id));
+                    }
                 }
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -97,7 +103,7 @@ class Select extends Query {
             BelongsTo relation = (BelongsTo) k.get(modelObject);
             Class<? extends Model> relatedClass = relation.getRelationClass();
             Object relatedModel = relatedClass.getMethod("find", Integer.class).invoke(relatedClass.newInstance(), id);
-            relation.getClass().getMethod("set", Object.class).invoke(relation, relatedModel);
+            relation.getClass().getMethod("set", Object.class, Integer.class).invoke(relation, relatedModel, id);
             return relation;
         } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

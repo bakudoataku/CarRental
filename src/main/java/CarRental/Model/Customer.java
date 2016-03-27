@@ -25,7 +25,7 @@ public class Customer extends Model {
         this.pesel = pesel;
         this.licence = licence;
         this.phone = phone;
-        this.address.set(address);
+        this.address = new BelongsTo(address);
         return (Customer) super.create();
     }
 }

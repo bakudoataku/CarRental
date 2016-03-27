@@ -11,17 +11,24 @@ import java.util.HashMap;
  */
 class Query {
     protected final Model model;
+    final Boolean selectRelated;
     final Class<? extends Model> modelClass;
     final HashMap<Field, String> fields = new HashMap<>();
+
     private Logger log = LoggerFactory.getLogger(Query.class);
 
-    Query(Model model) {
+    Query(Model model, Boolean selectRelated) {
         this.model = model;
+        this.selectRelated = selectRelated;
         this.modelClass = model.getClass();
         Field[] fields = model.getClass().getFields();
         for (Field field : fields) {
             this.fields.put(field, getSimpleName(field));
         }
+    }
+
+    Query(Model model) {
+        this(model, false);
     }
 
     private String getSimpleName(Field field) {
