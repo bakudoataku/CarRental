@@ -1,6 +1,7 @@
 package CarRental.Controller;
 
 import CarRental.Model.Body;
+import CarRental.Model.Brand;
 import CarRental.Model.Car;
 import CarRental.Model.Entities.BodyEntity;
 import CarRental.Model.Entities.CarEntity;
@@ -11,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import orm.Model;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,7 +38,9 @@ public class BodiesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Body> bodies = (List<Body>) new Body().all();
+        HashMap<Model, Model> joins = new HashMap<>();
+        joins.put(new Body(), new Brand());
+        List<Body> bodies = (List<Body>) new Body().join(joins).all();
         bodies.forEach(body -> bodyEntities.add(new BodyEntity(body.id, body.name, body.getBrand().name)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));

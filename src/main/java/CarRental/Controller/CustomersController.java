@@ -1,6 +1,8 @@
 package CarRental.Controller;
 
 import CarRental.Model.Address;
+import CarRental.Model.Body;
+import CarRental.Model.Brand;
 import CarRental.Model.Customer;
 import CarRental.Model.Entities.CustomerEntity;
 import javafx.collections.FXCollections;
@@ -10,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import orm.Model;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -46,7 +50,9 @@ public class CustomersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Customer> customers = (List<Customer>) new Customer().all();
+        HashMap<Model, Model> joins = new HashMap<>();
+        joins.put(new Customer(), new Address());
+        List<Customer> customers = (List<Customer>) new Customer().join(joins).all();
         customers.forEach(customer ->
                 customerEntities.add(new CustomerEntity(customer.id, customer.first_name, customer.last_name,
                         customer.pesel, customer.licence, customer.phone, (Address) customer.address.get())));

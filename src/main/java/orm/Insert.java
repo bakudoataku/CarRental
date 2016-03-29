@@ -25,7 +25,7 @@ class Insert extends Query {
 
     Integer insert() {
         Integer id = 0;
-        fields.forEach((field, type) -> {
+        model.fields.forEach((field, type) -> {
             if (!field.getName().equals("id")) {
                 columns.add(field.getName());
                 if (type.equals("BelongsTo")) {

@@ -32,7 +32,7 @@ public class BelongsTo {
     public Object get() {
         try {
             if (relationObjectId == null) {
-                return null;
+                return relationClass.newInstance();
             } else if (relationObject == null){
                 relationObject = relationClass.newInstance().find(relationObjectId);
                 return relationObject;

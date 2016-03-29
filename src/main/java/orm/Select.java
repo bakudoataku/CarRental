@@ -13,22 +13,44 @@ import java.util.HashMap;
 import java.util.List;
 
 class Select extends Query {
+    private ArrayList<Class> join_classes = new ArrayList<>();
     private Logger log = LoggerFactory.getLogger(Select.class);
     private Statement st;
+    private String query;
 
     Select(Model model) {
         super(model);
+        prepareQuery();
+        prepareJoins();
         try {
             st = Connector.getInstance().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
-            st = null;
+        }
+    }
+
+    private void prepareQuery() {
+        query = String.format("SELECT * FROM \"%s\"", model.getTable());
+    }
+
+    private void prepareJoins() {
+        StringBuilder joins = new StringBuilder();
+        HashMap<Model, Model> join_relations = model.join_relations;
+        if (join_relations != null) {
+            join_relations.forEach((left, right) -> {
+                join_classes.add(right.getClass());
+                joins.append(String.format(" JOIN %s ON \"%s\".\"%s\" = \"%s\".\"id\"",
+                        right.table,
+                        left.table,
+                        right.getClass().getSimpleName().toLowerCase(),
+                        right.table));
+                query += joins.toString();
+            });
         }
     }
 
     List<Model> all() {
         try {
-            String query = String.format("SELECT * FROM \"%s\"", model.getTable());
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
             return resultSetToArrayList(rs);
@@ -41,8 +63,8 @@ class Select extends Query {
     List<Model> where(HashMap<String, String> conditions) {
         try {
             List<String> where = new ArrayList<>();
-            conditions.forEach((k, v) -> where.add("\"" + k + "\"" + "='" + v + "'"));
-            String query = String.format("SELECT * FROM \"%s\" WHERE %s", model.getTable(), String.join(" AND ", where));
+            conditions.forEach((k, v) -> where.add(String.format("\"%s\"='%s'", String.join("\".\"", model.getTable(), k), v)));
+            query = String.format("%s WHERE %s", query, String.join(" AND ", where));
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
             return resultSetToArrayList(rs);
@@ -54,7 +76,7 @@ class Select extends Query {
 
     Model find(Integer id) {
         try {
-            String query = String.format("SELECT * FROM \"%s\" WHERE id=%d LIMIT 1", model.getTable(), id);
+            query = String.format("%s WHERE id=%d LIMIT 1", query, id);
             log.debug("Query {}", query);
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
@@ -77,13 +99,14 @@ class Select extends Query {
     }
 
     private Model resultToModelObject(ResultSet rs, Model modelObject) {
-        fields.forEach((k, v) -> {
+        modelObject.fields.forEach((k, v) -> {
             try {
                 if (!v.equals("BelongsTo")) {
                     k.set(modelObject, rs.getClass().getMethod("get" + v, String.class).invoke(rs, k.getName()));
                 } else if (v.equals("BelongsTo")) {
-                    if (selectRelated) {
-                        k.set(modelObject, getRelatedObject(rs, modelObject, k));
+                    if (join_classes.contains(((BelongsTo) k.get(modelObject)).getRelationClass())) {
+                        Model relatedModel = getRelatedObject(rs, modelObject, k);
+                        k.set(modelObject, new BelongsTo(relatedModel));
                     } else {
                         Class<? extends Model> relationClass = ((BelongsTo) k.get(modelObject)).getRelationClass();
                         Integer id = (Integer) rs.getClass().getMethod("getInt", String.class).invoke(rs, k.getName());
@@ -97,15 +120,10 @@ class Select extends Query {
         return modelObject;
     }
 
-    private Object getRelatedObject(ResultSet rs, Model modelObject, Field k) {
+    private Model getRelatedObject(ResultSet rs, Model modelObject, Field k) {
         try {
-            Integer id = rs.getInt(k.getName());
-            BelongsTo relation = (BelongsTo) k.get(modelObject);
-            Class<? extends Model> relatedClass = relation.getRelationClass();
-            Object relatedModel = relatedClass.getMethod("find", Integer.class).invoke(relatedClass.newInstance(), id);
-            relation.getClass().getMethod("set", Object.class, Integer.class).invoke(relation, relatedModel, id);
-            return relation;
-        } catch (SQLException | InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            return resultToModelObject(rs, (Model) ((BelongsTo) k.get(modelObject)).get());
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
             return null;
         }
