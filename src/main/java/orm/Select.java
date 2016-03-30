@@ -21,7 +21,9 @@ class Select extends Query {
     Select(Model model) {
         super(model);
         prepareQuery();
-        prepareJoins();
+        if (model.join_relations != null) {
+            prepareJoins();
+        }
         try {
             st = Connector.getInstance().createStatement();
         } catch (SQLException e) {
@@ -30,23 +32,41 @@ class Select extends Query {
     }
 
     private void prepareQuery() {
-        query = String.format("SELECT * FROM \"%s\"", model.getTable());
+        ArrayList<String> columns = new ArrayList<>();
+        model.fields.forEach((k, v) -> {
+            columns.add(String.format("\"%s\".\"%s\" as %s_%s", model.getTable(), k.getName(), model.getTable(), k.getName()));
+        });
+        if (model.join_relations != null) {
+            query = String.format("SELECT %s, %s FROM \"%s\" ", String.join(", ", columns), joinFields(), model.getTable());
+        } else {
+            query = String.format("SELECT %s FROM \"%s\" ", String.join(", ", columns), model.getTable());
+        }
+    }
+
+    private String joinFields() {
+        String joinFields;
+        ArrayList<String> columns = new ArrayList<>();
+        model.join_relations.forEach((left, right) -> {
+            right.fields.forEach((k, v) -> {
+                columns.add(String.format("\"%s\".\"%s\" as %s_%s", right.getTable(), k.getName(), right.getTable(), k.getName()));
+            });
+        });
+        joinFields = String.join(", ", columns);
+
+        return joinFields;
     }
 
     private void prepareJoins() {
         StringBuilder joins = new StringBuilder();
-        HashMap<Model, Model> join_relations = model.join_relations;
-        if (join_relations != null) {
-            join_relations.forEach((left, right) -> {
-                join_classes.add(right.getClass());
-                joins.append(String.format(" JOIN %s ON \"%s\".\"%s\" = \"%s\".\"id\"",
-                        right.table,
-                        left.table,
-                        right.getClass().getSimpleName().toLowerCase(),
-                        right.table));
-                query += joins.toString();
-            });
-        }
+        model.join_relations.forEach((left, right) -> {
+            join_classes.add(right.getClass());
+            joins.append(String.format(" JOIN %s ON \"%s\".\"%s\" = \"%s\".\"id\"",
+                    right.table,
+                    left.table,
+                    right.getClass().getSimpleName().toLowerCase(),
+                    right.table));
+            query += joins.toString();
+        });
     }
 
     List<Model> all() {
@@ -102,14 +122,18 @@ class Select extends Query {
         modelObject.fields.forEach((k, v) -> {
             try {
                 if (!v.equals("BelongsTo")) {
-                    k.set(modelObject, rs.getClass().getMethod("get" + v, String.class).invoke(rs, k.getName()));
+                    k.set(modelObject, rs.getClass().
+                            getMethod("get" + v, String.class).
+                            invoke(rs, String.join("_", modelObject.getTable(), k.getName())));
                 } else if (v.equals("BelongsTo")) {
                     if (join_classes.contains(((BelongsTo) k.get(modelObject)).getRelationClass())) {
                         Model relatedModel = getRelatedObject(rs, modelObject, k);
                         k.set(modelObject, new BelongsTo(relatedModel));
                     } else {
                         Class<? extends Model> relationClass = ((BelongsTo) k.get(modelObject)).getRelationClass();
-                        Integer id = (Integer) rs.getClass().getMethod("getInt", String.class).invoke(rs, k.getName());
+                        Integer id = (Integer) rs.getClass().
+                                getMethod("getInt", String.class).
+                                invoke(rs, String.join("_", modelObject.getTable(), k.getName()));
                         k.set(modelObject, new BelongsTo(relationClass, id));
                     }
                 }
