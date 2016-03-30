@@ -59,6 +59,19 @@ public class DashboardController implements Initializable {
     }
 
     public void addCarAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/addCarView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            AddCustomerController addCustomerController = loader.getController();
+            addCustomerController.setCustomerEntities(customersController.getCustomerEntities());
+            stage.setTitle("Add new car");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void rentCarAction(ActionEvent actionEvent) {
