@@ -18,11 +18,6 @@ public class Body extends Model {
         this.table = "bodies";
     }
 
-    public Body(HashMap<Model, Model> joins){
-        this();
-        this.join_relations = joins;
-    }
-
     public Brand getBrand(){
         return (Brand) brand.get();
     }
