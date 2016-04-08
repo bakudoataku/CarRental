@@ -40,6 +40,7 @@ public class DashboardController implements Initializable {
     private GridPane customers;
     @FXML
     private CustomersController customersController;
+    private AddCarController addCarController;
     private ObservableList<CarEntity> carEntities;
 
     public void addCustomerAction(ActionEvent actionEvent) {
@@ -63,8 +64,8 @@ public class DashboardController implements Initializable {
             FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/addCarView.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            AddCustomerController addCustomerController = loader.getController();
-            addCustomerController.setCustomerEntities(customersController.getCustomerEntities());
+            AddCarController addCarController = loader.getController();
+            addCarController.setCarEntities(addCarController.getCarEntities());
             stage.setTitle("Add new car");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
