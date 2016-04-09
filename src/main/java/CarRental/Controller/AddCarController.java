@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class AddCarController implements Initializable{
     @FXML public ComboBox bodies;
     @FXML public TextField registration;
     @FXML public TextField price;
+    @FXML public Pane addCarForm;
 
     private ObservableList<BodyEntity> bodyEntities = FXCollections.observableArrayList();
     private ObservableList<CarEntity> carEntities = FXCollections.observableArrayList();
@@ -47,5 +49,12 @@ public class AddCarController implements Initializable{
 
     public void addBodyAction(ActionEvent actionEvent) {
 
+    }
+
+    public void addCarAction(ActionEvent actionEvent) {
+    }
+
+    public void clearFormAction(ActionEvent actionEvent) {
+        addCarForm.getChildren().stream().filter(node -> node instanceof TextField).forEach(node -> ((TextField) node).setText(""));
     }
 }
