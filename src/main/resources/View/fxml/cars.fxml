@@ -17,6 +17,7 @@
         <columns>
             <TableColumn fx:id="id" prefWidth="75.0" text="Id"/>
             <TableColumn fx:id="body" prefWidth="75.0" text="Body"/>
+            <TableColumn fx:id="brand" prefWidth="75.0" text="Brand"/>
             <TableColumn fx:id="price" prefWidth="75.0" text="Price"/>
             <TableColumn fx:id="registration" prefWidth="75.0" text="Registration"/>
         </columns>

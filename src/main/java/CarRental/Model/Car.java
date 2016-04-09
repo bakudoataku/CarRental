@@ -16,7 +16,16 @@ public class Car extends Model {
         this.table = "cars";
     }
 
-    public Body getBody(){
+    public Car create(Float price, String registration, Body body) {
+        this.price = price;
+        this.registration = registration;
+        this.body = new BelongsTo(body);
+        return (Car) super.create();
+    }
+
+    public Body getBody() {
         return (Body) body.get();
     }
 }
+
+

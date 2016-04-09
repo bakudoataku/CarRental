@@ -1,5 +1,7 @@
 package CarRental.Controller;
 
+import CarRental.Model.Body;
+import CarRental.Model.Brand;
 import CarRental.Model.Car;
 import CarRental.Model.Entities.CarEntity;
 import javafx.collections.FXCollections;
@@ -9,10 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import orm.Model;
 
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +31,8 @@ public class CarsController implements Initializable {
     @FXML
     private TableColumn<CarEntity, String> body;
     @FXML
+    private TableColumn<CarEntity, String> brand;
+    @FXML
     private TableColumn<CarEntity, Float> price;
     @FXML
     private TableColumn<CarEntity, String> registration;
@@ -37,11 +41,16 @@ public class CarsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        HashMap<Model, Model> joins = new HashMap<>();
+        joins.put(new Car(), new Body());
+        joins.put(new Body(), new Brand());
+        // List<Car> cars = (List<Car>) new Car().join(joins).all();  TODO: checke why double joins does not work.
         List<Car> cars = (List<Car>) new Car().all();
-        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.getBody().name, car.price, car.registration)));
+        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.getBody().name, car.getBody().getBrand().name, car.price, car.registration)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         body.setCellValueFactory(new PropertyValueFactory<>("body"));
+        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
         registration.setCellValueFactory(new PropertyValueFactory<>("registration"));
         availableCarsTableView.setItems(carEntities);
