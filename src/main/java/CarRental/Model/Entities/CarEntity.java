@@ -12,9 +12,9 @@ public class CarEntity {
     private final FloatProperty price;
     private final StringProperty registration;
 
-    public CarEntity(Integer id, String model, Float price, String registration) {
+    public CarEntity(Integer id, String body, Float price, String registration) {
         this.id = new SimpleIntegerProperty(id);
-        this.body = new SimpleStringProperty(model);
+        this.body = new SimpleStringProperty(body);
         this.price = new SimpleFloatProperty(price);
         this.registration = new SimpleStringProperty(registration);
     }
@@ -23,7 +23,7 @@ public class CarEntity {
         return id.get();
     }
 
-    public String getModel() {
+    public String getBody() {
         return body.get();
     }
 

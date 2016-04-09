@@ -27,7 +27,7 @@ public class CarsController implements Initializable {
     @FXML
     private TableColumn<CarEntity, Integer> id;
     @FXML
-    private TableColumn<CarEntity, String> model;
+    private TableColumn<CarEntity, String> body;
     @FXML
     private TableColumn<CarEntity, Float> price;
     @FXML
@@ -38,10 +38,10 @@ public class CarsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Car> cars = (List<Car>) new Car().all();
-        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.model, car.price, car.registration)));
+        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.getBody().name, car.price, car.registration)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        model.setCellValueFactory(new PropertyValueFactory<>("model"));
+        body.setCellValueFactory(new PropertyValueFactory<>("body"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
         registration.setCellValueFactory(new PropertyValueFactory<>("registration"));
         availableCarsTableView.setItems(carEntities);

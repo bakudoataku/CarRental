@@ -10,9 +10,13 @@ public class Car extends Model {
 
     public Float price;
     public String registration;
-    public BelongsTo model = new BelongsTo(Model.class);
+    public BelongsTo body = new BelongsTo(Body.class);
 
     public Car() {
         this.table = "cars";
+    }
+
+    public Body getBody(){
+        return (Body) body.get();
     }
 }
