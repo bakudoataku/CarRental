@@ -8,13 +8,13 @@ import javafx.beans.property.*;
 public class CarEntity {
 
     private final IntegerProperty id;
-    private final StringProperty model;
+    private final StringProperty body;
     private final FloatProperty price;
     private final StringProperty registration;
 
     public CarEntity(Integer id, String model, Float price, String registration) {
         this.id = new SimpleIntegerProperty(id);
-        this.model = new SimpleStringProperty(model);
+        this.body = new SimpleStringProperty(model);
         this.price = new SimpleFloatProperty(price);
         this.registration = new SimpleStringProperty(registration);
     }
@@ -24,7 +24,7 @@ public class CarEntity {
     }
 
     public String getModel() {
-        return model.get();
+        return body.get();
     }
 
     public float getPrice() {

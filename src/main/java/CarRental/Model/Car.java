@@ -1,5 +1,6 @@
 package CarRental.Model;
 
+import orm.BelongsTo;
 import orm.Model;
 
 /**
@@ -7,9 +8,9 @@ import orm.Model;
  */
 public class Car extends Model {
 
-    public String model;
     public Float price;
     public String registration;
+    public BelongsTo model = new BelongsTo(Model.class);
 
     public Car() {
         this.table = "cars";

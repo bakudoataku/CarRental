@@ -1,11 +1,14 @@
 package CarRental.Controller;
 
+import CarRental.Model.Entities.BodyEntity;
 import CarRental.Model.Entities.CarEntity;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -16,11 +19,13 @@ import java.util.ResourceBundle;
  */
 public class AddCarController implements Initializable{
 
-    @FXML ChoiceBox bodySelect;
-    @FXML TextField id;
-    @FXML TextField price;
+    @FXML public TextField id;
+    @FXML public ComboBox bodies;
+    @FXML public TextField registration;
+    @FXML public TextField price;
 
-    private ObservableList<CarEntity> carEntities;
+    private ObservableList<BodyEntity> bodyEntities = FXCollections.observableArrayList();
+    private ObservableList<CarEntity> carEntities = FXCollections.observableArrayList();
 
     void setCarEntities(ObservableList<CarEntity> carEntities) {
         this.carEntities = carEntities;
