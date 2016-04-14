@@ -20,6 +20,7 @@ public class BodyEntity {
         this.brand = new SimpleStringProperty(brand);
     }
 
+
     public int getId() {
         return id.get();
     }
@@ -30,5 +31,10 @@ public class BodyEntity {
 
     public String getBrand() {
         return brand.get();
+    }
+
+    @Override
+    public String toString(){
+        return name.getValue();
     }
 }

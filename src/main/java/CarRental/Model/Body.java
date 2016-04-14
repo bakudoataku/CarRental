@@ -3,8 +3,6 @@ package CarRental.Model;
 import orm.BelongsTo;
 import orm.Model;
 
-import java.util.HashMap;
-
 /**
  * Created by Bartosz on 22.03.2016.
  */
@@ -20,5 +18,18 @@ public class Body extends Model {
 
     public Brand getBrand(){
         return (Brand) brand.get();
+    }
+
+    public Body create(String name){
+        this.newInstance = true;
+        //jeszcze brand bo sie wysypuje
+        this.name = name;
+        this.id = save();
+        if (id == 0) {
+            return null;
+        } else {
+            newInstance = false;
+            return this;
+        }
     }
 }

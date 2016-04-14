@@ -19,6 +19,6 @@
     <Label fx:id="statusLabel" layoutX="18.0" layoutY="335.0" prefHeight="17.0" prefWidth="66.0"/>
     <ComboBox fx:id="bodies" layoutX="18.0" layoutY="24.0" prefHeight="27.0" prefWidth="200.0"
               promptText="Choose body"/>
-    <Button fx:id="addBody" layoutX="227.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0"
+    <Button fx:id="addBody" onAction="#addBodyAction" layoutX="227.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0"
             text="+" textAlignment="CENTER"/>
 </Pane>
