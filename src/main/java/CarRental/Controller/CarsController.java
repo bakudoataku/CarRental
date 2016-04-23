@@ -46,13 +46,20 @@ public class CarsController implements Initializable {
         joins.put(new Body(), new Brand());
         // List<Car> cars = (List<Car>) new Car().join(joins).all();  TODO: checke why double joins does not work.
         List<Car> cars = (List<Car>) new Car().all();
-        cars.forEach(car -> carEntities.add(new CarEntity(car.id, car.getBody().name, car.getBody().getBrand().name, car.price, car.registration)));
+        cars.forEach(car -> carEntities.add(new CarEntity(car)));
+        setCellFactories();
+        availableCarsTableView.setItems(carEntities);
+    }
 
+    private void setCellFactories() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         body.setCellValueFactory(new PropertyValueFactory<>("body"));
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
         registration.setCellValueFactory(new PropertyValueFactory<>("registration"));
-        availableCarsTableView.setItems(carEntities);
+    }
+
+    ObservableList<CarEntity> getCarEntities() {
+        return carEntities;
     }
 }

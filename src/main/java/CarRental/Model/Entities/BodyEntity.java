@@ -1,5 +1,7 @@
 package CarRental.Model.Entities;
 
+import CarRental.Model.Body;
+import CarRental.Model.Brand;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,12 +16,14 @@ public class BodyEntity {
     private final StringProperty name;
     private final StringProperty brand;
 
-    public BodyEntity(Integer id, String name, String brand) {
-        this.id = new SimpleIntegerProperty(id);
-        this.name = new SimpleStringProperty(name);
-        this.brand = new SimpleStringProperty(brand);
-    }
+    public final Body bodyModel;
 
+    public BodyEntity(Body body) {
+        this.id = new SimpleIntegerProperty(body.id);
+        this.name = new SimpleStringProperty(body.name);
+        this.brand = new SimpleStringProperty(((Brand) body.brand.get()).name);
+        this.bodyModel = body;
+    }
 
     public int getId() {
         return id.get();

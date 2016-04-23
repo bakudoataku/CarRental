@@ -22,17 +22,8 @@ public class CustomerEntity {
     private final StringProperty city;
     private final IntegerProperty zip;
 
-    public CustomerEntity(Integer id, String first_name, String last_name, Integer pesel, String licence, Integer phone, Address address) {
-        this.id = new SimpleIntegerProperty(id);
-        this.first_name = new SimpleStringProperty(first_name);
-        this.last_name = new SimpleStringProperty(last_name);
-        this.pesel = new SimpleIntegerProperty(pesel);
-        this.licence = new SimpleStringProperty(licence);
-        this.phone = new SimpleIntegerProperty(phone);
-        this.street = new SimpleStringProperty(address.street);
-        this.city = new SimpleStringProperty(address.city);
-        this.zip = new SimpleIntegerProperty(address.zip);
-    }
+    public final Customer customerModel;
+    public final Address addressModel;
 
     public CustomerEntity(Customer customer, Address address) {
         this.id = new SimpleIntegerProperty(customer.id);
@@ -44,6 +35,8 @@ public class CustomerEntity {
         this.street = new SimpleStringProperty(address.street);
         this.city = new SimpleStringProperty(address.city);
         this.zip = new SimpleIntegerProperty(address.zip);
+        this.customerModel = customer;
+        this.addressModel = address;
     }
 
     public int getId() {

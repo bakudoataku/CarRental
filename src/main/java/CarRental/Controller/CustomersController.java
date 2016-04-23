@@ -1,8 +1,6 @@
 package CarRental.Controller;
 
 import CarRental.Model.Address;
-import CarRental.Model.Body;
-import CarRental.Model.Brand;
 import CarRental.Model.Customer;
 import CarRental.Model.Entities.CustomerEntity;
 import javafx.collections.FXCollections;
@@ -54,8 +52,12 @@ public class CustomersController implements Initializable {
         joins.put(new Customer(), new Address());
         List<Customer> customers = (List<Customer>) new Customer().join(joins).all();
         customers.forEach(customer ->
-                customerEntities.add(new CustomerEntity(customer.id, customer.first_name, customer.last_name,
-                        customer.pesel, customer.licence, customer.phone, (Address) customer.address.get())));
+                customerEntities.add(new CustomerEntity(customer, (Address) customer.address.get())));
+        setCellFactories();
+        CustomersTableView.setItems(customerEntities);
+    }
+
+    private void setCellFactories() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("last_name"));
@@ -65,7 +67,6 @@ public class CustomersController implements Initializable {
         street.setCellValueFactory(new PropertyValueFactory<>("street"));
         city.setCellValueFactory(new PropertyValueFactory<>("city"));
         zip.setCellValueFactory(new PropertyValueFactory<>("zip"));
-        CustomersTableView.setItems(customerEntities);
     }
 
     ObservableList<CustomerEntity> getCustomerEntities() {

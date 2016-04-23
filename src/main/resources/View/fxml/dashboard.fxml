@@ -20,14 +20,14 @@
     <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Rent a car"
             onAction="#rentCarAction"/>
     <TabPane layoutX="125.0" layoutY="50.0" prefHeight="433.0" prefWidth="510.0" tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Available cars">
-            <fx:include source="cars.fxml"/>
-        </Tab>
         <Tab text="Bodies">
             <fx:include source="bodies.fxml"/>
         </Tab>
         <Tab text="Customer list">
             <fx:include fx:id="customers" source="customers.fxml"/>
+        </Tab>
+        <Tab text="Available cars">
+            <fx:include fx:id="cars" source="cars.fxml"/>
         </Tab>
         <Tab text="Cars rented">
             <!--<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">-->

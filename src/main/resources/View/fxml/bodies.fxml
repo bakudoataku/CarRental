@@ -17,7 +17,7 @@
         <columns>
             <TableColumn fx:id="id" prefWidth="75.0" text="Id"/>
             <TableColumn fx:id="name" prefWidth="75.0" text="Model"/>
-            <TableColumn fx:id="brand" prefWidth="75.0" text="Price"/>
+            <TableColumn fx:id="body" prefWidth="75.0" text="Price"/>
         </columns>
     </TableView>
 </GridPane>

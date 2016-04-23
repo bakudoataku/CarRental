@@ -1,6 +1,7 @@
 package CarRental.Controller;
 
 import CarRental.Model.Body;
+import CarRental.Model.Car;
 import CarRental.Model.Entities.BodyEntity;
 import CarRental.Model.Entities.CarEntity;
 import javafx.collections.FXCollections;
@@ -30,7 +31,7 @@ public class AddCarController implements Initializable {
     @FXML
     public TextField id;
     @FXML
-    public ComboBox bodies;
+    public ComboBox<BodyEntity> bodies;
     @FXML
     public TextField registration;
     @FXML
@@ -44,7 +45,7 @@ public class AddCarController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Body> bodiesList = (List<Body>) new Body().all();
-        bodiesList.forEach(body -> bodyEntities.add(new BodyEntity(body.id, body.name, null)));
+        bodiesList.forEach(body -> bodyEntities.add(new BodyEntity(body)));
 
         bodies.setItems(bodyEntities);
     }
@@ -66,8 +67,8 @@ public class AddCarController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.show();
-        }catch (IOException e){
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,6 +77,13 @@ public class AddCarController implements Initializable {
     }
 
     public void addCarAction(ActionEvent actionEvent) {
-
+        if (addCarForm.getChildren().stream().filter(node -> node instanceof TextField).noneMatch(node -> ((TextField) node).getText().equals(""))) {
+            Car car = new Car().create(Float.parseFloat(price.getText()), registration.getText(), bodies.getSelectionModel().getSelectedItem().bodyModel);
+            if (car != null) {
+                carEntities.add(new CarEntity(car));
+            }
+            Stage stage = (Stage) addCarForm.getScene().getWindow();
+            stage.close();
+        }
     }
 }

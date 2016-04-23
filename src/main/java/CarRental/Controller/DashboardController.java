@@ -39,7 +39,10 @@ public class DashboardController implements Initializable {
     @FXML
     private GridPane customers;
     @FXML
+    private GridPane cars;
+    @FXML
     private CustomersController customersController;
+    private CarsController carsController;
     private AddCarController addCarController;
     private ObservableList<CarEntity> carEntities;
 
@@ -65,7 +68,7 @@ public class DashboardController implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             AddCarController addCarController = loader.getController();
-            addCarController.setCarEntities(addCarController.getCarEntities());
+            addCarController.setCarEntities(carsController.getCarEntities());
             stage.setTitle("Add new car");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

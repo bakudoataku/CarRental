@@ -14,13 +14,7 @@ public class CarEntity {
     private final FloatProperty price;
     private final StringProperty registration;
 
-    public CarEntity(Integer id, String body, String brand, Float price, String registration) {
-        this.id = new SimpleIntegerProperty(id);
-        this.body = new SimpleStringProperty(body);
-        this.brand = new SimpleStringProperty(brand);
-        this.price = new SimpleFloatProperty(price);
-        this.registration = new SimpleStringProperty(registration);
-    }
+    public final Car carModel;
 
     public CarEntity(Car car) {
         this.id = new SimpleIntegerProperty(car.id);
@@ -28,6 +22,7 @@ public class CarEntity {
         this.brand = new SimpleStringProperty(car.getBody().getBrand().name);
         this.price = new SimpleFloatProperty(car.price);
         this.registration = new SimpleStringProperty(car.registration);
+        this.carModel = car;
     }
 
     public int getId() {

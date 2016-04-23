@@ -32,7 +32,7 @@ public class BodiesController implements Initializable {
     @FXML
     private TableColumn<BodyEntity, String> name;
     @FXML
-    private TableColumn<BodyEntity, String> brand;
+    private TableColumn<BodyEntity, String> body;
 
     private ObservableList<BodyEntity> bodyEntities = FXCollections.observableArrayList();
 
@@ -41,11 +41,11 @@ public class BodiesController implements Initializable {
         HashMap<Model, Model> joins = new HashMap<>();
         joins.put(new Body(), new Brand());
         List<Body> bodies = (List<Body>) new Body().join(joins).all();
-        bodies.forEach(body -> bodyEntities.add(new BodyEntity(body.id, body.name, body.getBrand().name)));
+        bodies.forEach(body -> bodyEntities.add(new BodyEntity(body)));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        body.setCellValueFactory(new PropertyValueFactory<>("brand"));
         bodiesTableView.setItems(bodyEntities);
     }
 }
