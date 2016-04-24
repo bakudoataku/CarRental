@@ -63,6 +63,8 @@ public class AddCarController implements Initializable {
             FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/View/fxml/AddBodyView.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            AddBodyController addBodyController = loader.getController();
+            addBodyController.setBodyEntities(this.bodyEntities);
             stage.setTitle("Add new body");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

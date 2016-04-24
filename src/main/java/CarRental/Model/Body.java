@@ -16,20 +16,14 @@ public class Body extends Model {
         this.table = "bodies";
     }
 
-    public Brand getBrand(){
+    public Brand getBrand() {
         return (Brand) brand.get();
     }
 
-    public Body create(String name){
-        this.newInstance = true;
-        //jeszcze brand bo sie wysypuje
+    public Body create(String name, Brand brand) {
         this.name = name;
-        this.id = save();
-        if (id == 0) {
-            return null;
-        } else {
-            newInstance = false;
-            return this;
-        }
+        this.brand = new BelongsTo(brand);
+        return (Body) super.create();
     }
 }
+
