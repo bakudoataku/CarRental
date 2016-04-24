@@ -12,4 +12,9 @@ public class Brand extends Model {
     public Brand() {
         this.table = "brands";
     }
+
+    public Brand create(String name) {
+        this.name = name;
+        return (Brand) super.create();
+    }
 }
