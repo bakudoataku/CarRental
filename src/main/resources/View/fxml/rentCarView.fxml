@@ -4,16 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane fx:id="rentCarPane" fx:controller="CarRental.Controller.RentCarController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rentCarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CarRental.Controller.RentCarController">
    <children>
       <ChoiceBox fx:id="customerSelect" layoutX="14.0" layoutY="29.0" prefWidth="150.0" />
       <ChoiceBox fx:id="brandSelect" layoutX="14.0" layoutY="68.0" prefWidth="150.0" />
       <ChoiceBox fx:id="bodySelect" layoutX="14.0" layoutY="106.0" prefWidth="150.0" />
-      <DatePicker fx:id="fromDate" layoutX="14.0" layoutY="145.0" prefHeight="25.0" prefWidth="150.0" />
-      <DatePicker fx:id="toDate" layoutX="14.0" layoutY="179.0" prefHeight="25.0" prefWidth="150.0" />
-      <Button onAction="#rentCar" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Rent" />
-      <Button onAction="#clearForm" layoutX="97.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Clear" />
-      <Label fx:id="statusLabel" layoutX="14.0" layoutY="265.0" prefHeight="17.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="carSelect" layoutX="14.0" layoutY="143.0" prefWidth="150.0" />
+      <DatePicker fx:id="fromDate" layoutX="14.0" layoutY="187.0" prefHeight="25.0" prefWidth="150.0" />
+      <DatePicker fx:id="toDate" layoutX="14.0" layoutY="220.0" prefHeight="25.0" prefWidth="150.0" />
+      <Button layoutX="14.0" layoutY="318.0" mnemonicParsing="false" onAction="#rentCar" prefHeight="25.0" prefWidth="67.0" text="Rent" />
+      <Button layoutX="95.0" layoutY="318.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="25.0" prefWidth="67.0" text="Clear" />
+      <Label fx:id="statusLabel" layoutX="14.0" layoutY="343.0" prefHeight="17.0" prefWidth="150.0" />
    </children>
 </Pane>

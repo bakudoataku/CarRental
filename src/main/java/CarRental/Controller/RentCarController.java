@@ -1,12 +1,7 @@
 package CarRental.Controller;
 
-import CarRental.Model.Address;
-import CarRental.Model.Body;
-import CarRental.Model.Brand;
-import CarRental.Model.Customer;
-import CarRental.Model.Entities.BodyEntity;
-import CarRental.Model.Entities.BrandEntity;
-import CarRental.Model.Entities.CustomerEntity;
+import CarRental.Model.*;
+import CarRental.Model.Entities.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,6 +28,7 @@ public class RentCarController implements Initializable {
     @FXML ChoiceBox<CustomerEntity> customerSelect;
     @FXML ChoiceBox<BodyEntity> bodySelect;
     @FXML ChoiceBox<BrandEntity> brandSelect;
+    @FXML ChoiceBox<CarEntity> carSelect;
     @FXML DatePicker fromDate;
     @FXML DatePicker toDate;
     @FXML Label statusLabel;
@@ -40,6 +36,9 @@ public class RentCarController implements Initializable {
     private ObservableList<CustomerEntity> customerEntities = FXCollections.observableArrayList();
     private ObservableList<BodyEntity> bodyEntities = FXCollections.observableArrayList();
     private ObservableList<BrandEntity> brandEntities = FXCollections.observableArrayList();
+    private ObservableList<CarEntity> carEntities = FXCollections.observableArrayList();
+
+    private ObservableList<CarRentsEntity> carRentsEntities = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +61,21 @@ public class RentCarController implements Initializable {
                     }});
                     bodyList.forEach(body -> bodyEntities.add(new BodyEntity(body)));
                     bodySelect.setItems(bodyEntities);
+                }
+            }
+        });
+
+        bodySelect.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<BodyEntity>() {
+            @Override
+            public void changed(ObservableValue<? extends BodyEntity> observable, BodyEntity oldValue, BodyEntity newValue) {
+                if(newValue!= null){
+                    BodyEntity selectedValue = (BodyEntity)bodySelect.getValue();
+                    carEntities.clear();
+                    List<Car> carList = (List<Car>) new Car().where(new HashMap<String, String>(){{
+                        put("body", String.valueOf(selectedValue.getId()));
+                    }});
+                    carList.forEach(car -> carEntities.add(new CarEntity(car)));
+                    carSelect.setItems(carEntities);
                 }
             }
         });

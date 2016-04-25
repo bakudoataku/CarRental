@@ -44,4 +44,7 @@ public class CarEntity {
     public String getBrand() {
         return brand.get();
     }
+
+    @Override
+    public String toString(){ return registration.get();}
 }
