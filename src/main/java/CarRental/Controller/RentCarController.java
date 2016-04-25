@@ -2,6 +2,7 @@ package CarRental.Controller;
 
 import CarRental.Model.Address;
 import CarRental.Model.Body;
+import CarRental.Model.Brand;
 import CarRental.Model.Customer;
 import CarRental.Model.Entities.BodyEntity;
 import CarRental.Model.Entities.BrandEntity;
@@ -19,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,9 +30,9 @@ import java.util.ResourceBundle;
 public class RentCarController implements Initializable {
 
     @FXML Pane rentCarPane;
-    @FXML ChoiceBox customerSelect;
-    @FXML ChoiceBox bodySelect;
-    @FXML ChoiceBox brandSelect;
+    @FXML ChoiceBox<CustomerEntity> customerSelect;
+    @FXML ChoiceBox<BodyEntity> bodySelect;
+    @FXML ChoiceBox<BrandEntity> brandSelect;
     @FXML DatePicker fromDate;
     @FXML DatePicker toDate;
     @FXML Label statusLabel;
@@ -45,20 +47,21 @@ public class RentCarController implements Initializable {
         customerList.forEach(customer -> customerEntities.add(new CustomerEntity(customer, (Address) customer.address.get())));
         customerSelect.setItems(customerEntities);
 
-        List<Body> bodyList = (List<Body>) new Body().all();
-        bodyList.forEach(body -> bodyEntities.add(new BodyEntity(body)));
-        bodySelect.setItems(bodyEntities);
+        List<Brand> brandList = (List<Brand>) new Brand().all();
+        brandList.forEach(brand -> brandEntities.add(new BrandEntity(brand)));
+        brandSelect.setItems(brandEntities);
 
-        bodySelect.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+        brandSelect.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if(newValue!= null){
-                    brandEntities.clear();
-                    bodyList.forEach(body -> {
-                        if(bodySelect.getValue().toString().equals(body.name))
-                            brandEntities.add(new BrandEntity(body.getBrand()));
-                    });
-                    brandSelect.setItems(brandEntities);
+                    BrandEntity selectedValue = (BrandEntity)brandSelect.getValue();
+                    bodyEntities.clear();
+                    List<Body> bodyList = (List<Body>) new Body().where(new HashMap<String, String>(){{
+                        put("brand", String.valueOf(selectedValue.getId()));
+                    }});
+                    bodyList.forEach(body -> bodyEntities.add(new BodyEntity(body)));
+                    bodySelect.setItems(bodyEntities);
                 }
             }
         });
