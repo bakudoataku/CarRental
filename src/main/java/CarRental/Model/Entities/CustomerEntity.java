@@ -74,4 +74,10 @@ public class CustomerEntity {
     public int getZip() {
         return zip.get();
     }
+
+    @Override
+    public String toString(){
+        return first_name.getValue() + " " + last_name.getValue();
+
+    }
 }

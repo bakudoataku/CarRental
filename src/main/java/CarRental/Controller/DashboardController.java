@@ -80,6 +80,17 @@ public class DashboardController implements Initializable {
     }
 
     public void rentCarAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(DashboardController.class.getResource("/View/fxml/rentCarView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Rent a car");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

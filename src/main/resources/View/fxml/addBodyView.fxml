@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="addBodyForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="388.0" prefWidth="281.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="CarRental.Controller.AddBodyController">
-    <TextField fx:id="name" layoutX="18.0" layoutY="93.0" prefHeight="25.0" prefWidth="200.0" promptText="Name"/>
-    <Button fx:id="addButton" layoutX="18.0" layoutY="134.0" mnemonicParsing="false" onAction="#addBodyAction"
-            prefHeight="25.0" prefWidth="90.0" text="Add"/>
-    <Button fx:id="clearButton" layoutX="128.0" layoutY="134.0" mnemonicParsing="false" onAction="#clearFormAction"
-            prefHeight="25.0" prefWidth="90.0" text="Clear"/>
-    <Label fx:id="statusLabel" layoutX="18.0" layoutY="335.0" prefHeight="17.0" prefWidth="66.0"/>
-    <ComboBox fx:id="brands" layoutX="18.0" layoutY="24.0" prefHeight="27.0" prefWidth="200.0"
-              promptText="Choose body"/>
-    <Button fx:id="addBody" onAction="#addBrandAction" layoutX="227.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0"
-            text="+" textAlignment="CENTER"/>
+<Pane fx:id="addBodyForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="267.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CarRental.Controller.AddBodyController">
+   <children>
+       <TextField fx:id="name" layoutX="18.0" layoutY="93.0" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
+       <Button fx:id="addButton" layoutX="18.0" layoutY="134.0" mnemonicParsing="false" onAction="#addBodyAction" prefHeight="25.0" prefWidth="90.0" text="Add" />
+       <Button fx:id="clearButton" layoutX="128.0" layoutY="134.0" mnemonicParsing="false" onAction="#clearFormAction" prefHeight="25.0" prefWidth="90.0" text="Clear" />
+       <Label fx:id="statusLabel" layoutX="18.0" layoutY="335.0" prefHeight="17.0" prefWidth="66.0" />
+       <ComboBox fx:id="brands" layoutX="18.0" layoutY="24.0" prefHeight="27.0" prefWidth="200.0" promptText="Choose body" />
+       <Button fx:id="addBody" layoutX="227.0" layoutY="24.0" mnemonicParsing="false" onAction="#addBrandAction" prefHeight="27.0" prefWidth="29.0" text="+" textAlignment="CENTER" />
+   </children>
 </Pane>
